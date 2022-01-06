@@ -1,3 +1,3 @@
 <template>
-  <div>Je suis la page requetes</div>
+  <div><md-button class="md-primary">click me</md-button></div>
 </template>

@@ -1,3 +1,3 @@
 <template>
-  <div>Je suis l'inventaire</div>
+  <div><md-button class="md-primary">Primary</md-button></div>
 </template>
