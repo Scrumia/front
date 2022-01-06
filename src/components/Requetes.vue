@@ -1,0 +1,24 @@
+<template>
+    <div class="md-layout">
+        <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <RequeteCard></RequeteCard>
+        </div>
+        <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <RequeteCard></RequeteCard>
+        </div>
+        <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <RequeteCard></RequeteCard>
+        </div>
+    </div>
+</template>
+
+<script>
+import RequeteCard from './RequeteCard.vue';
+
+export default {
+    name: "Requetes",
+    components: {
+        RequeteCard,
+    }
+}
+</script>
