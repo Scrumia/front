@@ -6,7 +6,7 @@
             </md-card-header>
 
             <md-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.
+                <div class="card-footer"> {{requestDate}} </div>
             </md-card-content>
         </md-card>
     </div>
@@ -16,9 +16,21 @@
     .md-card {
         width: 186px;
         height: 250px;
-        margin: 4px;
-        display: inline-block;
         vertical-align: top;
+        background-color: white;
+        border-radius: 12px;
+        margin: 1.5em;
+        border: none;
+        box-shadow: 3px 5px 5px #b5b5b5;
+        list-style: none;
+        display: flex;
+        position: relative;
+    }
+
+    .card-footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
 </style>
 
@@ -29,7 +41,14 @@ export default{
         requestName: {
             type: String,
             default: "",
+        },
+        requestDate: {
+            type: String,
+            default: "",
         }
+    },
+    created() {
+
     }
 }
 </script>
