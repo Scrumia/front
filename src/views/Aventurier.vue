@@ -22,7 +22,9 @@
           <div class="icon-niveau">
             <img
               class="image-niveau"
-              src="/assets/icon-niveau.png"
+              :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' : 
+                (aventurier.status == 'mission' ? 'assets/icon-niveau-vert.png' 
+                : 'assets/icon-niveau-rouge.png')"
               alt="icon niveau"
             />
             <span class="niveau">{{ aventurier.experienceLevel }}</span>
@@ -44,11 +46,11 @@ export default {
   data() {
     return {
       dataAventuriers: [
-        new Adventurer("archer", 6, "status", new Speciality("speciality")),
-        new Adventurer("barbare", 5, "status", new Speciality("speciality")),
-        new Adventurer("archer", 6, "status", new Speciality("speciality")),
-        new Adventurer("archer", 3, "status", new Speciality("speciality")),
-        new Adventurer("barbare", 7, "status", new Speciality("speciality")),
+        new Adventurer("archer", 6, "dispo", new Speciality("speciality")),
+        new Adventurer("barbare", 5, "mission", new Speciality("speciality")),
+        new Adventurer("archer", 6, "dispo", new Speciality("speciality")),
+        new Adventurer("archer", 3, "repos", new Speciality("speciality")),
+        new Adventurer("barbare", 7, "mission", new Speciality("speciality")),
       ],
     };
   },
