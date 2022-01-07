@@ -3,6 +3,7 @@
         <ul class="liste">
             <li v-for="quest in dataRequetes" :key="quest.title">
                 <div class="requete">
+                    <!--<img class="image-quete" src="/assets/quete-bg.png" alt="image d'aventure">-->
                     <div class="titreRequete">
                         {{quest.title}}
                     </div>
@@ -34,13 +35,14 @@ export default {
 <style scoped>
 li {
     list-style: none;
-    height: 10em;
-    width: 7.5em;
+    height: 250px;
+    width: 185px;
     margin: 1.5em;
 }
 .requete {
     background-color: white;
-    border-radius: 12px 12px 0px 0px;
+    background-image: url("/assets/quete-bg.png");
+    border-radius: 12px 12px 12px 12px;
     border: none;
     box-shadow: 3px 5px 5px #b5b5b5;
     height: 80%;
@@ -48,14 +50,19 @@ li {
     display: flex;
     z-index: 0;
     position: relative;
+    color: white;
+
 }
 .titreRequete {
     font-weight: bold;
+    position: absolute;
+    top: 2px;
+    left: 5px;
 }
 .dateRequete {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 2px;
+    right: 5px;
 }
 .liste {
     display: flex;
