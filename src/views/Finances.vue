@@ -1,3 +1,3 @@
 <template>
-  <div>Je suis la page des finances</div>
+  <div>Page finance non disponible</div>
 </template>

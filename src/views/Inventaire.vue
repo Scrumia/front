@@ -1,3 +1,3 @@
 <template>
-  <div><md-button class="md-primary">Primary</md-button></div>
+  <div>Page inventaire non disponible</div>
 </template>
