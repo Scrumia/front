@@ -1,3 +1,4 @@
 <template>
-  <div><md-button class="md-primary">click me</md-button></div>
+  <div>click me</div>
+  <font-awesome-icon icon="coffee"></font-awesome-icon>
 </template>

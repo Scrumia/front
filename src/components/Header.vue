@@ -15,9 +15,11 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 5px;
+  border-bottom: 2px rgb(194, 192, 192) solid;
 }
 
 img {
-  height: 60px;
+  height: 80px;
+  margin-left: 10px;
 }
 </style>

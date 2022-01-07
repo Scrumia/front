@@ -25,6 +25,7 @@ export default {
 </script>
 
 <style>
+/* router-link est pris par vue comme la balise a */
 * {
   margin: 0;
   padding: 0;
@@ -41,14 +42,14 @@ export default {
   padding: 5px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
 a {
   font-size: 24px;
-  padding: 10px 40px;
-  justify-content: center;
+  padding: 10px 15px;
+  justify-content: flex-start;
   text-decoration: none;
+  color: black;
   display: flex;
   width: 100%;
   transition: all 0.8s ease;
@@ -56,5 +57,13 @@ a {
 
 a:hover {
   background: rgb(139, 136, 138);
+}
+a:active {
+  background: #806969;
+  color: #7c7878;
+}
+a:visited {
+  background: #7c7878;
+  color: none;
 }
 </style>
