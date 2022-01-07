@@ -1,3 +1,3 @@
 <template>
-  <div>Page finance non disponible</div>
+  <div>Page finance non disponible<i class="fas fa-coffee"></i></div>
 </template>

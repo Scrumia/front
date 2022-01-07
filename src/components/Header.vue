@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <img src="../assets/logo.png" />
+    <!-- dans l'attente de la route de sortie il pointe vers google -->
+    <a href="http://www.google.com"
+      ><font-awesome-icon icon="sign-out-alt" class="icone-sortir"
+    /></a>
   </div>
 </template>
 
@@ -21,5 +25,14 @@ export default {
 img {
   height: 80px;
   margin-left: 10px;
+}
+.icone-sortir {
+  width: 45px;
+  height: 45px;
+  margin: auto;
+  margin-right: 5px;
+}
+a {
+  width: 70px;
 }
 </style>
