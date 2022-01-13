@@ -16,15 +16,15 @@
         <div class="aventurier">
           <img
             class="image-aventurier"
-            :src="'/assets/' + aventurier.fullName + '.png'"
+            :src="'../assets/' + aventurier.fullName + '.png'"
             alt="aventurier"
           />
           <div class="icon-niveau">
             <img
               class="image-niveau"
-              :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' : 
-                (aventurier.status == 'mission' ? 'assets/icon-niveau-vert.png' 
-                : 'assets/icon-niveau-rouge.png')"
+              :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' :
+                (aventurier.status == 'mission' ? '/assets/icon-niveau-vert.png'
+                : '../assets/icon-niveau-rouge.png')"
               alt="icon niveau"
             />
             <span class="niveau">{{ aventurier.experienceLevel }}</span>

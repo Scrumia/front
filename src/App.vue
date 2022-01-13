@@ -25,6 +25,9 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #F6F2ED;
+}
 /* router-link est pris par vue comme la balise a */
 * {
   margin: 0;
