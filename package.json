@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "git": "npm run build && git add . && git commit -am ",
-    "postgit": "git pull && git push && git subtree push --prefix dist origin gh-pages"
+    "postgit": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
