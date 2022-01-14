@@ -8,7 +8,7 @@
       </div>
       <i class="fas fa-search logo"></i>
     </div>
-    <button class="ajout">+</button>
+    <button class="ajout" v-on:click="search()">+</button>
   </div>
   <div>
     <ul class="liste">
@@ -39,21 +39,23 @@
 </template>
 
 <script>
-import { Adventurer } from "@/model/adventurer.model";
-import { Speciality } from "@/model/speciality.model";
 export default {
   name: "RechercheAventurier",
   data() {
     return {
-      dataAventuriers: [
-        new Adventurer("archer", 6, "dispo", new Speciality("speciality")),
-        new Adventurer("barbare", 5, "mission", new Speciality("speciality")),
-        new Adventurer("archer", 6, "dispo", new Speciality("speciality")),
-        new Adventurer("archer", 3, "repos", new Speciality("speciality")),
-        new Adventurer("barbare", 7, "mission", new Speciality("speciality")),
-      ],
+      dataAventuriers: [],
     };
   },
+  methods: {
+    async search() {
+      const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/adventurers`);
+      if(response.status === 200){
+        for(const game of response.data){
+          this.dataAventuriers.push(game);
+        }
+      }
+    }
+  }
 };
 </script>
 

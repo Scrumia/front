@@ -13,7 +13,7 @@ const routes = [
     component: Requetes,
   },
   {
-    name: "Requetes",
+    name: "Inventaire",
     path: "/inventaire",
     component: Inventaire,
   },
@@ -23,7 +23,7 @@ const routes = [
     component: Aventurier,
   },
   {
-    name: "Inventaire",
+    name: "Finances",
     path: "/finances",
     component: Finances,
   },

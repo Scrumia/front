@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <img class="logo" src=/assets/logo.svg alt="icon niveau" height="10em" width="10em"/>
+    <img class="logo" src=/assets/logo.svg alt="icon niveau" height="180" width="180"/>
     <div>
       <input type="text" v-model="model.email" placeholder="Email">
       <input type="password" v-model="model.password" placeholder="Mot de passe">
@@ -16,10 +16,6 @@ export default {
   name: "Connexion",
   data() {
     return {
-      validCredentials: {
-        email: "admin@scrumia.com",
-        password: "admin44"
-      },
       model: {
         email: "",
         password: ""
@@ -29,7 +25,6 @@ export default {
   },
   methods: {
     async login() {
-      console.log('login');
       this.loading = true;
       const body = {
         email: this.model.email,
@@ -43,7 +38,6 @@ export default {
           offset: 100,
         })
       });
-      console.log(response)
       if(response.status === 401){
         this.loading = false;
         ElNotification.error({
@@ -53,17 +47,17 @@ export default {
         });
       }
       if (
-          response.status === 201
+          response.status === 200
       ) {
-        console.log('response : ', response);
         window.localStorage.setItem('token', response.data.token);
-        this.loading = false;
+        this.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+        this.loading = true;
         ElNotification.success({
           title: 'Success',
           message: 'Login successful',
           offset: 100,
         });
-        await this.$router.push({name: "ConfigGame"});
+        await this.$router.push({name: "Home"});
       } else {
         ElNotification.error({
           title: 'Error',
@@ -91,7 +85,7 @@ input {
   border-radius: 12px;
   margin: 1.5em 3em 1.5em 3em;
   padding: 1em;
-  width: 27em;
+  width: 30em;
   border: 1px solid #b5b5b5;
   box-shadow: 3px 5px 5px #b5b5b5;
   flex-grow: 1;
@@ -102,12 +96,15 @@ button {
   border-radius: 12px;
   margin: 1.5em 3em 1.5em 3em;
   padding: 1em;
-  width: 27em;
+  width: 30em;
   border-radius: 12px;
   border: none;
   margin: 1.5em 3em 1.5em 3em;
   padding: 1em;
   width: 29em;
   box-shadow: 3px 5px 5px #b5b5b5;
+}
+.logo {
+  margin: 1.5em 10em 0em 10em;
 }
 </style>
