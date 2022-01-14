@@ -4,6 +4,7 @@ import Finances from "../views/Finances.vue";
 import Requetes from "../views/Requetes.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
+import Connexion from "@/views/Connexion";
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
     component: Requetes,
   },
   {
-    name: "Requetes",
+    name: "Inventaire",
     path: "/inventaire",
     component: Inventaire,
   },
@@ -22,10 +23,15 @@ const routes = [
     component: Aventurier,
   },
   {
-    name: "Inventaire",
+    name: "Finances",
     path: "/finances",
     component: Finances,
   },
+  {
+    name: "Connexion",
+    path: "/connexion",
+    component: Connexion,
+  }
 ];
 
 const router = createRouter({

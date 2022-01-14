@@ -8,7 +8,7 @@
       </div>
       <i class="fas fa-search logo"></i>
     </div>
-    <button class="ajout">+</button>
+    <button class="ajout" v-on:click="search()">+</button>
   </div>
   <div>
     <ul class="liste">
@@ -16,15 +16,15 @@
         <div class="aventurier">
           <img
             class="image-aventurier"
-            :src="'/assets/' + aventurier.fullName + '.png'"
+            :src="'../assets/' + aventurier.fullName + '.png'"
             alt="aventurier"
           />
           <div class="icon-niveau">
             <img
               class="image-niveau"
-              :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' : 
-                (aventurier.status == 'mission' ? 'assets/icon-niveau-vert.png' 
-                : 'assets/icon-niveau-rouge.png')"
+              :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' :
+                (aventurier.status == 'mission' ? '/assets/icon-niveau-vert.png'
+                : '../assets/icon-niveau-rouge.png')"
               alt="icon niveau"
             />
             <span class="niveau">{{ aventurier.experienceLevel }}</span>
@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import { Adventurer } from "@/model/adventurer.model";
-import { Speciality } from "@/model/speciality.model";
 export default {
   name: "RechercheAventurier",
   props: {
@@ -60,22 +58,24 @@ export default {
   },
   data() {
     return {
-      dataAventuriers: [
-        new Adventurer("archer", 6, "dispo", new Speciality("speciality")),
-        new Adventurer("barbare", 5, "mission", new Speciality("speciality")),
-        new Adventurer("archer", 6, "dispo", new Speciality("speciality")),
-        new Adventurer("archer", 3, "repos", new Speciality("speciality")),
-        new Adventurer("barbare", 7, "mission", new Speciality("speciality")),
-      ],
+      dataAventuriers: [],
       showSearchBarLocal: this.showSearchBar,
       addAdventurerLocal: this.addAdventurer,
     };
   },
   methods: {
+    async search() {
+      const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/adventurers`);
+      if(response.status === 200){
+        for(const game of response.data){
+          this.dataAventuriers.push(game);
+        }
+      }
+    },
     toggleSearchBar() {
       this.$emit('displaySearchBar');
     }
-  },
+  }
 };
 </script>
 
