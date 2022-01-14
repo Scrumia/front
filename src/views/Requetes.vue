@@ -1,14 +1,14 @@
 <template>
   <div>
     <ul class="liste">
-      <li v-for="quest in dataRequetes" :key="quest.title" @click="openModal(quest)">
+      <li v-for="quest in dataRequetes" :key="quest.name" @click="openModal(quest)">
         <div class="requete">
           <!--<img class="image-quete" src="/assets/quete-bg.png" alt="image d'aventure">-->
           <div class="titreRequete">
-            {{ quest.title }}
+            {{ quest.name }}
           </div>
           <div class="dateRequete">
-            {{ quest.date }}
+            {{ quest.created_at }}
           </div>
         </div>
       </li>
@@ -17,7 +17,15 @@
 
   <div v-if="isModalVisible" class="modal">
     <div @click="closeModal">X</div>
+    <div class="modalQuestTitle"> {{modalTitle}} </div>  
     {{ modalDesc }}
+
+    <div>
+      Durée: {{ duration }} jours
+    </div>
+    <div>
+      Date d'expiration: {{ expiration }}
+    </div>
 
     <RechercheAventurier :showSearchBar="false" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;">
     </RechercheAventurier>
@@ -30,7 +38,6 @@
 
 <script>
 import RechercheAventurier from "../views/Aventurier.vue";
-import { Quest } from "@/model/quest.model";
 export default {
   name: "Requetes",
   components: { RechercheAventurier },
@@ -39,7 +46,10 @@ export default {
     openModal(quest) {
       this.isModalVisible = true;
       console.log(quest);
-      this.modalDesc = quest.desc;
+      this.modalDesc = quest.description;
+      this.modalTitle = quest.name;
+      this.duration = quest.duration;
+      this.expiration = `${quest.expiration_date.substring(8, 10)}/${quest.expiration_date.substring(5, 7)}/${quest.expiration_date.substring(0, 4)}`;
     },
     closeModal() {
       this.isModalVisible = false;
@@ -47,16 +57,25 @@ export default {
   },
   data() {
     return {
-      dataRequetes: [
-        new Quest("Titre requête n°1", "01/01/01", "Desc1"),
-        new Quest("Titre requête n°2", "02/02/02", "Desc2"),
-        new Quest("Titre requête n°3", "03/03/03", "Desc3"),
-      ],
+      dataRequetes: [],
       modalDesc: "test",
+      modalTitle: "",
+      duration: "",
+      expiration: "",
       isModalVisible: false,
       isSearchVisible: false,
     };
   },
+  created: async function() {
+    const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/requests`);
+    if(response.status === 200){
+      for(let game of response.data){
+        console.log(game.name);
+        game.created_at = `${game.created_at.substring(8, 10)}/${game.created_at.substring(5, 7)}/${game.created_at.substring(0, 4)}`;
+        this.dataRequetes.push(game);
+      }
+    }
+  }
 };
 </script>
 
