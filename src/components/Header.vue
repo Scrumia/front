@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img src="../assets/logo.png" />
+    <img src="@/assets/logo.png" />
     <!-- dans l'attente de la route de sortie il pointe vers google -->
     <a href="http://www.google.com"
       ><font-awesome-icon icon="sign-out-alt" class="icone-sortir"

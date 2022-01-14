@@ -16,13 +16,13 @@
         <div class="aventurier">
           <img
             class="image-aventurier"
-            :src="'./assets/' + aventurier.fullName + '.png'"
+            src="/assets/logo.png"
             alt="aventurier"
           />
           <div class="icon-niveau">
             <img
               class="image-niveau"
-              src="./assets/icon-niveau.png"
+              src="/assets/icon-niveau.png"
               alt="icon niveau"
             />
             <span class="niveau">{{ aventurier.experienceLevel }}</span>
