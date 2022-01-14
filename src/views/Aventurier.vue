@@ -1,5 +1,5 @@
 <template>
-  <div class="top-page">
+  <div v-show="showSearchBarLocal" class="top-page">
     <div class="block-filtre">
       <div class="saisi-filtre">
         <input v-model="nom" placeholder="nom" />
@@ -36,6 +36,11 @@
       </li>
     </ul>
   </div>
+  <div v-show="addAdventurerLocal">
+    <div @click="toggleSearchBar">
+      Rajouter un aventurier
+    </div>
+  </div>
 </template>
 
 <script>
@@ -43,6 +48,16 @@ import { Adventurer } from "@/model/adventurer.model";
 import { Speciality } from "@/model/speciality.model";
 export default {
   name: "RechercheAventurier",
+  props: {
+    showSearchBar: {
+      type: Boolean,
+      default: true,
+    },
+    addAdventurer: {
+      type: Boolean,
+      default: false,
+    }
+  },
   data() {
     return {
       dataAventuriers: [
@@ -52,7 +67,14 @@ export default {
         new Adventurer("archer", 3, "repos", new Speciality("speciality")),
         new Adventurer("barbare", 7, "mission", new Speciality("speciality")),
       ],
+      showSearchBarLocal: this.showSearchBar,
+      addAdventurerLocal: this.addAdventurer,
     };
+  },
+  methods: {
+    toggleSearchBar() {
+      this.$emit('displaySearchBar');
+    }
   },
 };
 </script>
