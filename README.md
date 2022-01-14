@@ -24,4 +24,4 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### website 
-See [here](https://scrumia.github.io/front/).
+See [here](https://scrumia.netlify.app/).
