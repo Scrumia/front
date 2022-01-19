@@ -1,10 +1,12 @@
 <template>
-  <div class="block">
-    <img class="logo" src=/assets/logo.svg alt="icon niveau" height="180" width="180"/>
-    <div>
-      <input type="text" v-model="model.email" placeholder="Email">
-      <input type="password" v-model="model.password" placeholder="Mot de passe">
-      <button v-on:click="login()">Se connecter</button>
+  <div class="super-block">
+    <div class="block">
+      <img class="logo" src=/assets/logo.svg alt="icon niveau" height="180" width="180"/>
+      <div>
+        <input type="text" v-model="model.email" placeholder="Email">
+        <input type="password" v-model="model.password" placeholder="Mot de passe">
+        <button v-on:click="login()">Se connecter</button>
+      </div>
     </div>
   </div>
 </template>
@@ -14,24 +16,33 @@ import {ElNotification} from "element-plus";
 
 export default {
   name: "Connexion",
+  el: '#App',
   data() {
     return {
       model: {
         email: "",
         password: ""
       },
-      loading: false,
+      isAuth: false,
     };
   },
+  created() {
+    this.load();
+  },
   methods: {
+    async auth() {
+      this.isAuth = true;
+      console.log('auth is call');
+    },
+    async load() {
+      window.localStorage.setItem('isAuth', 'false');
+    },
     async login() {
-      this.loading = true;
       const body = {
         email: this.model.email,
         password: this.model.password
       }
       const response = await this.axios.post("https://api-capuche-dopale.herokuapp.com/login", body ).catch((err) => {
-        this.loading= false;
         ElNotification.error({
           title: 'Error',
           message: `Username or password is invalid ${err}`,
@@ -39,7 +50,6 @@ export default {
         })
       });
       if(response.status === 401){
-        this.loading = false;
         ElNotification.error({
           title: 'Error',
           message: 'Username or password is invalid',
@@ -50,13 +60,10 @@ export default {
           response.status === 200
       ) {
         window.localStorage.setItem('token', response.data.token);
+        window.localStorage.setItem('currentUser', response.data.user);
+        window.localStorage.setItem('isAuth', 'true');
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-        this.loading = true;
-        ElNotification.success({
-          title: 'Success',
-          message: 'Login successful',
-          offset: 100,
-        });
+        this.isAuth = true;
         await this.$router.push({name: "Home"});
       } else {
         ElNotification.error({
@@ -79,6 +86,12 @@ export default {
   height: 30em;
   width: 30em;
   margin: 5em;
+}
+.super-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 input {
   background-color: white;
@@ -105,6 +118,6 @@ button {
   box-shadow: 3px 5px 5px #b5b5b5;
 }
 .logo {
-  margin: 1.5em 10em 0em 10em;
+  margin: 1.5em auto 0em auto;
 }
 </style>

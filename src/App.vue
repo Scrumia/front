@@ -1,13 +1,13 @@
 <template>
-  <Header></Header>
-  <div class="container">
-    <div class="dashboard">
-      <router-link class="routerLink" to="/">Requêtes</router-link>
-      <router-link class="routerLink" to="/inventaire">Inventaire</router-link>
-      <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
-      <router-link class="routerLink" to="/finances">Finances</router-link>
-    </div>
-    <div>
+  <div>
+    <Header v-if="seeNavbar"></Header>
+    <div class="container">
+      <div class="dashboard" v-if="seeNavbar">
+        <router-link class="routerLink" to="/">Requêtes</router-link>
+        <router-link class="routerLink" to="/inventaire">Inventaire</router-link>
+        <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
+        <router-link class="routerLink" to="/finances">Finances</router-link>
+      </div>
       <router-view></router-view>
     </div>
   </div>
@@ -16,10 +16,12 @@
 <script>
 import Header from "./components/Header.vue";
 export default {
-  components: { Header },
+  components: {Header},
   name: "App",
-  component: {
-    Header,
+  computed: {
+    seeNavbar() {
+      return this.$route?.name !== "Connexion";
+    }
   },
 };
 </script>
@@ -36,6 +38,7 @@ body {
 }
 .container {
   display: flex;
+  width: 100%;
   margin: auto;
 }
 .dashboard {

@@ -19,7 +19,8 @@ export default {
 }
 
 img {
-  height: 80px;
+  height: 5em;
+  width: 5em;
   margin-left: 10px;
 }
 </style>
