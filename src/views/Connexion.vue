@@ -86,6 +86,10 @@ export default {
   height: 30em;
   width: 30em;
   margin: 5em;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .super-block {
   display: flex;
@@ -118,6 +122,6 @@ button {
   box-shadow: 3px 5px 5px #b5b5b5;
 }
 .logo {
-  margin: 1.5em auto 0em auto;
+  margin: 1.5em auto 0 auto;
 }
 </style>
