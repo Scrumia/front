@@ -10,6 +10,26 @@
       </div>
       <ima class="ajout">+</ima>
     </div>
+    <div class="legende">
+      <img
+          class="image-niveau icon"
+          :src="'/assets/icon-niveau-bleu.png'"
+          alt="aventurier"
+      />
+      <label>Au repos</label>
+      <img
+          class="image-niveau icon"
+          :src="'/assets/icon-niveau-vert.png'"
+          alt="aventurier"
+      />
+      <label>Disponible</label>
+      <img
+          class="image-niveau icon"
+          :src="'/assets/icon-niveau-rouge.png'"
+          alt="aventurier"
+      />
+      <label>En mission</label>
+    </div>
     <ul class="liste">
       <li v-for="aventurier in aventurierFilter" :key="aventurier.fullName">
         <div class="aventurier">
@@ -77,7 +97,6 @@ export default {
     },
     search() {
       this.aventurierFilter = this.dataAventuriers;
-      console.log('search');
       if (this.model.name !== null && this.model.name != '')
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.full_name.toLowerCase().includes(this.model.name.toLowerCase()));
       if (this.model.speciality !== null && this.model.speciality != '')
@@ -91,7 +110,6 @@ export default {
     },
   },
   async beforeMount() {
-    console.log(`beforeMount: ${this.byQuest}`);
     if(this.byQuest==-1) {
       this.dataAventuriers = [];
       this.aventurierFilter = [];
@@ -106,7 +124,6 @@ export default {
       this.dataAventuriers = [];
       this.aventurierFilter = [];
       const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/requests/${this.byQuest}`);
-      console.log(response.data.adventurers);
       if(response.status === 200){
         for(const game of response.data.adventurers){
           this.dataAventuriers.push(game);
@@ -218,5 +235,13 @@ li {
 .block {
   display: flex;
   flex-direction: column;
+}
+label {
+  position: relative;
+  margin: 1em;
+  top: -1.1em;
+}
+.icon {
+  margin-left: 2em;
 }
 </style>
