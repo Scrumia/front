@@ -23,6 +23,10 @@ export default {
       return this.$route?.name !== "Connexion";
     }
   },
+  beforeMount() {
+    const token = localStorage["token"];
+    if (token !== undefined && token !== null) this.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
 };
 </script>
 
