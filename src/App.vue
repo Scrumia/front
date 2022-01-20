@@ -80,7 +80,8 @@ body {
 .content-app {
   display: flex;
   height: 87vh;
-  width: 157vh;
+  width: max-content;
+  margin-right: 2em;
   border-radius: 30px;
   background: #fdfdfd;
 }
