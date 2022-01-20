@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <ul class="liste">
-      <li v-for="quest in dataRequetes" :key="quest.name" @click="openModal(quest)" class="card">
-        <div class="requete">
-          <!--<img class="image-quete" src="/assets/quete-bg.png" alt="image d'aventure">-->
-          <div class="titreRequete">
-            {{ quest.name }}
+  <div class="content">
+    <div class="cards">
+      <div v-for="quest in dataRequetes"  :key="quest.name" @click="openModal(quest)" class="card">
+        <a href="" class="card-click">
+          <div class="cont">
           </div>
-          <div class="dateRequete">
-            {{ quest.created_at }}
+          <div class="details">
+            <div class="title">{{ quest.name }}</div>
+            <!-- <div class="desc">{{ quest.desc}}</div> -->
+            <div class="date">{{ quest.created_at }}</div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </a>
+      </div>
+    </div>
   </div>
 
   <div v-if="isModalVisible" class="modal">
