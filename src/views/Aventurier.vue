@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <div class="top-page">
+    <div v-show="showSearchBarLocal" class="top-page">
       <div class="block-filtre">
         <div class="saisi-filtre">
           <input v-model="nom" placeholder="nom" />
@@ -36,12 +36,29 @@
       </li>
     </ul>
   </div>
-  
+  <div v-show="addAdventurerLocal">
+    <div @click="toggleSearchBar">
+      Rajouter un aventurier
+    </div>
+  </div>
 </template>
-
 <script>
 export default {
   name: "RechercheAventurier",
+  props: {
+    showSearchBar: {
+      type: Boolean,
+      default: true,
+    },
+    addAdventurer: {
+      type: Boolean,
+      default: false,
+    },
+    byQuest: {
+      type: Number,
+      default: -1,
+    }
+  },
   data() {
     return {
       dataAventuriers: [],
@@ -49,28 +66,43 @@ export default {
       nom: null,
       speciality: null,
       exp: null,
-
+      showSearchBarLocal: this.showSearchBar,
+      addAdventurerLocal: this.addAdventurer,
     };
   },
   methods: {
-    filter() {
-
+    toggleSearchBar() {
+      this.$emit('displaySearchBar');
     }
   },
   async beforeMount() {
-    const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/adventurers`);
-    if(response.status === 200){
-      for(const game of response.data){
-        this.dataAventuriers.push(game);
-        this.aventurierFilter.push(game);
+    console.log(`beforeMount: ${this.byQuest}`);
+    if(this.byQuest==-1) {
+      this.dataAventuriers = [];
+      this.aventurierFilter = [];
+      const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/adventurers`);
+      if(response.status === 200){
+        for(const game of response.data){
+          this.dataAventuriers.push(game);
+          this.aventurierFilter.push(game);
+        }
+      }
+    } else {
+      this.dataAventuriers = [];
+      this.aventurierFilter = [];
+      const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/requests/${this.byQuest}`);
+      console.log(response.data.adventurers);
+      if(response.status === 200){
+        for(const game of response.data.adventurers){
+          this.dataAventuriers.push(game);
+          this.aventurierFilter.push(game);
+        }
       }
     }
-  }
+  },
 };
 </script>
-
 <style scoped>
-
 .aventurier-page {
   display: flex;
   flex-direction: column;
@@ -135,7 +167,6 @@ li {
   display: flex;
   z-index: 0;
 }
-
 .aventurier {
   display: flex;
   background-color: blue;

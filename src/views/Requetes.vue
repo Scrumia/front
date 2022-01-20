@@ -1,35 +1,83 @@
 <template>
-    <div class="content">
-        <div class="cards">
-            <div v-for="quest in dataRequetes"  :key="quest.title" class="card">
-                <a href="" class="card-click">
-                    <div class="cont">
-                    </div>
-                    <div class="details">
-                        <div class="title">{{ quest.title }}</div>
-                        <!-- <div class="desc">{{ quest.desc}}</div> -->
-                        <div class="date">{{ quest.date }}</div>
-                    </div>
-                </a>
-            </div>
-        </div>
+  <div class="content">
+    <div class="cards">
+      <div v-for="quest in dataRequetes"  :key="quest.name" @click="openModal(quest)" class="card">
+        <a class="card-click">
+          <div class="cont">
+          </div>
+          <div class="details">
+            <div class="title">{{ quest.name }}</div>
+            <div class="date">{{ quest.created_at }}</div>
+          </div>
+        </a>
+      </div>
     </div>
+  </div>
+
+  <div v-if="isModalVisible" class="modal">
+    <div @click="closeModal">X</div>
+    <div class="modalQuestTitle"> {{modalTitle}} </div>  
+    {{ modalDesc }}
+
+    <div>
+      Durée: {{ duration }} jours
+    </div>
+    <div>
+      Date d'expiration: {{ expiration }}
+    </div>
+
+    <RechercheAventurier :showSearchBar="false" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;" :byQuest="questId">
+    </RechercheAventurier>
+
+    <RechercheAventurier v-if="isSearchVisible">
+    </RechercheAventurier>
+
+  </div>
 </template>
 
 <script>
-import { Quest } from "@/model/quest.model";
-
+import RechercheAventurier from "../views/Aventurier.vue";
 export default {
-    name: "Requetes",
-    data() {
-        return {
-            dataRequetes: [
-                new Quest("Titre requête n°1", "01/01/01"),
-                new Quest("Titre requête n°2", "02/02/02"),
-                new Quest("Titre requête n°3", "03/03/03"),
-            ],
-        };
+  name: "Requetes",
+  components: { RechercheAventurier },
+  component: { RechercheAventurier },
+  methods: {
+    openModal(quest) {
+      console.log("open");
+      this.isModalVisible = true;
+      console.log(quest);
+      this.modalDesc = quest.description;
+      this.modalTitle = quest.name;
+      this.duration = quest.duration;
+      this.questId = quest.id;
+      this.expiration = `${quest.expiration_date.substring(8, 10)}/${quest.expiration_date.substring(5, 7)}/${quest.expiration_date.substring(0, 4)}`;
     },
+    closeModal() {
+      this.isModalVisible = false;
+      this.isSearchVisible = false;
+    }
+  },
+  data() {
+    return {
+      dataRequetes: [],
+      modalDesc: "test",
+      modalTitle: "",
+      duration: "",
+      expiration: "",
+      isModalVisible: false,
+      isSearchVisible: false,
+    };
+  },
+  created: async function() {
+    const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/requests`);
+    if(response.status === 200){
+      for(let game of response.data){
+        console.log(game.name);
+        game.created_at = `${game.created_at.substring(8, 10)}/${game.created_at.substring(5, 7)}/${game.created_at.substring(0, 4)}`;
+        this.dataRequetes.push(game);
+      }
+    }
+  }
 };
 </script>
 
@@ -40,6 +88,23 @@ export default {
     padding: 0;
     box-sizing: border-box;
 }
+.modal {
+  background-color: white;
+  border-radius: 12px 12px 12px 12px;
+}
+.requete {
+  background-color: white;
+  background-image: url("/assets/quete-bg.png");
+  border-radius: 12px 12px 12px 12px;
+  border: none;
+  box-shadow: 3px 5px 5px #b5b5b5;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  z-index: 0;
+  position: relative;
+  color: white;
+} 
 
 body {
     background: #e3eeff;
