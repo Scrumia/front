@@ -1,4 +1,4 @@
-o<template>
+<template>
   <div class="content">
     <div class="cards">
       <div v-for="quest in dataRequetes"  :key="quest.name" @click="openModal(quest)" class="card">
@@ -7,7 +7,6 @@ o<template>
           </div>
           <div class="details">
             <div class="title">{{ quest.name }}</div>
-            <!-- <div class="desc">{{ quest.desc}}</div> -->
             <div class="date">{{ quest.created_at }}</div>
           </div>
         </a>
