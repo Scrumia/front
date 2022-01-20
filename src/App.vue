@@ -1,5 +1,4 @@
 <template>
-<<<<<<< Updated upstream
   <div>
     <Header v-if="seeNavbar"></Header>
     <div class="container">
@@ -9,17 +8,6 @@
         <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
         <router-link class="routerLink" to="/finances">Finances</router-link>
       </div>
-=======
-  <Header></Header>
-  <div class="container">
-    <div class="dashboard">
-      <router-link class="routerLink" to="/">Requêtes</router-link>
-      <router-link class="routerLink" to="/inventaire">Inventaire</router-link>
-      <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
-      <router-link class="routerLink" to="/finances">Finances</router-link>
-    </div>
-    <div class="content-app">
->>>>>>> Stashed changes
       <router-view></router-view>
     </div>
   </div>
