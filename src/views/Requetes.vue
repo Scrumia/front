@@ -86,6 +86,10 @@ li {
   width: 185px;
   margin: 1.5em;
 }
+.modal {
+  background-color: white;
+  border-radius: 12px 12px 12px 12px;
+}
 .requete {
   background-color: white;
   background-image: url("/assets/quete-bg.png");
