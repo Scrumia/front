@@ -1,7 +1,19 @@
 <template>
+<div class="contenu">
   <div class="container">
-    <img src="../assets/logo.png" />
+    <div class="home-logo">
+      <img src="../assets/logo-monochrome.svg" />
+    </div>
+    <div v-if="isAuth" class="auth">
+
+    </div>
+    <div v-else class="auth">
+      <a href="" class="signin">
+        <img src="../assets/logo-monochrome.svg" alt="">
+      </a>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -10,16 +22,27 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .container {
   display: flex;
+  width: 95%;
   justify-content: space-between;
-  padding: 5px;
-  border-bottom: 2px rgb(194, 192, 192) solid;
+  align-items: center;
+  background: #e3eeff;
 }
 
 img {
-  height: 80px;
+  height: 5em;
+  width: 5em;
   margin-left: 10px;
 }
+.contenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  
+}
+
 </style>

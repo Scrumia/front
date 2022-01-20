@@ -6,7 +6,35 @@
         <input v-model="specialite" placeholder="spécialité" />
         <input v-model="exp" placeholder="niveau d'expérience" />
       </div>
-      <i class="fas fa-search logo"></i>
+      <button class="ajout">+</button>
+    </div>
+    <div class="aventurier-liste">
+      <ul class="liste">
+        <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
+          <a href="">
+            <div class="aventurier">
+              <img
+                class="image-aventurier"
+                :src="'/assets/' + aventurier.fullName + '.png'"
+                alt="aventurier"
+              />
+              <div class="icon-niveau">
+                <img
+                  class="image-niveau"
+                  :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' : 
+                    (aventurier.status == 'mission' ? 'assets/icon-niveau-vert.png' 
+                    : 'assets/icon-niveau-rouge.png')"
+                  alt="icon niveau"
+                />
+                <span class="niveau">{{ aventurier.experienceLevel }}</span>
+              </div>
+            </div>
+            <div id="nom">
+              {{ aventurier.fullName }}
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
     <button class="ajout" v-on:click="search()">+</button>
   </div>
@@ -80,6 +108,13 @@ export default {
 </script>
 
 <style scoped>
+
+.aventurier-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
 .top-page {
   display: flex;
   margin: 2em;
@@ -127,18 +162,23 @@ li {
   width: 7.5em;
   margin: 1.5em;
 }
-.aventurier {
-  background-color: white;
-  border-radius: 12px 12px 0px 0px;
+.aventurier-page {
+  background-color: e3eeff;
+  border-radius: 30px;
   border: none;
-  box-shadow: 3px 5px 5px #b5b5b5;
-  height: 80%;
-  width: 100%;
   display: flex;
   z-index: 0;
 }
+
+.aventurier {
+  display: flex;
+  background-color: blue;
+  border-radius: 15px 15px 0 0;
+  height: 150px;
+  width: 120px;
+}
 .image-aventurier {
-  background-size: 7em;
+  background-size: 1em;
   text-align: center;
   background-repeat: no-repeat;
   z-index: 1;
