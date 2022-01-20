@@ -1,4 +1,4 @@
-<template>
+o<template>
   <div class="content">
     <div class="cards">
       <div v-for="quest in dataRequetes"  :key="quest.name" @click="openModal(quest)" class="card">
