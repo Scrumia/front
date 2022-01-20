@@ -23,9 +23,11 @@ export default {
       return this.$route?.name !== "Connexion";
     }
   },
-  beforeMount() {
+  async beforeMount() {
     const token = localStorage["token"];
-    if (token !== undefined && token !== null) this.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (token !== undefined && token !== null) {
+      this.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else await this.$router.push({name: "Connexion"});
   }
 };
 </script>
