@@ -2,7 +2,7 @@
   <div class="content">
     <div class="cards">
       <div v-for="quest in dataRequetes"  :key="quest.name" @click="openModal(quest)" class="card">
-        <a href="" class="card-click">
+        <a class="card-click">
           <div class="cont">
           </div>
           <div class="details">
@@ -26,7 +26,7 @@
       Date d'expiration: {{ expiration }}
     </div>
 
-    <RechercheAventurier :showSearchBar="false" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;">
+    <RechercheAventurier :showSearchBar="false" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;" :byQuest="questId">
     </RechercheAventurier>
 
     <RechercheAventurier v-if="isSearchVisible">
@@ -43,15 +43,18 @@ export default {
   component: { RechercheAventurier },
   methods: {
     openModal(quest) {
+      console.log("open");
       this.isModalVisible = true;
       console.log(quest);
       this.modalDesc = quest.description;
       this.modalTitle = quest.name;
       this.duration = quest.duration;
+      this.questId = quest.id;
       this.expiration = `${quest.expiration_date.substring(8, 10)}/${quest.expiration_date.substring(5, 7)}/${quest.expiration_date.substring(0, 4)}`;
     },
     closeModal() {
       this.isModalVisible = false;
+      this.isSearchVisible = false;
     }
   },
   data() {
