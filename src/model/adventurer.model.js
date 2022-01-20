@@ -1,12 +1,12 @@
 export class Adventurer {
-  fullName;
-  experienceLevel;
+  full_name;
+  experience_level;
   status;
   speciality;
 
-  constructor(fullName, experienceLevel, status, speciality) {
-    this.fullName = fullName;
-    this.experienceLevel = experienceLevel;
+  constructor(full_name, experience_level, status, speciality) {
+    this.full_name = full_name;
+    this.experience_level = experience_level;
     this.status = status;
     this.speciality = speciality;
   }

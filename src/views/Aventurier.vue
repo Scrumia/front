@@ -1,5 +1,5 @@
 <template>
-  <div class="aventurier-page">
+  <div class="block">
     <div class="top-page">
       <div class="block-filtre">
         <div class="saisi-filtre">
@@ -11,58 +11,27 @@
       </div>
       <button class="ajout">+</button>
     </div>
-    <div class="aventurier-liste">
-      <ul class="liste">
-        <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
-          <a href="">
-            <div class="aventurier">
-              <img
-                class="image-aventurier"
-                :src="'/assets/' + aventurier.fullName + '.png'"
-                alt="aventurier"
-              />
-              <div class="icon-niveau">
-                <img
-                  class="image-niveau"
-                  :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' : 
-                    (aventurier.status == 'mission' ? 'assets/icon-niveau-vert.png' 
-                    : 'assets/icon-niveau-rouge.png')"
-                  alt="icon niveau"
-                />
-                <span class="niveau">{{ aventurier.experienceLevel }}</span>
-              </div>
-            </div>
-            <div id="nom">
-              {{ aventurier.fullName }}
-            </div>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <button class="ajout" v-on:click="search()">+</button>
-  </div>
-  <div>
     <ul class="liste">
       <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
         <div class="aventurier">
           <img
-            class="image-aventurier"
-            :src="'../assets/' + aventurier.fullName + '.png'"
-            alt="aventurier"
+              class="image-aventurier"
+              :src="'/assets/' + aventurier?.speciality.name + '.png'"
+              alt="aventurier"
           />
           <div class="icon-niveau">
             <img
-              class="image-niveau"
-              :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' :
+                class="image-niveau"
+                :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' :
                 (aventurier.status == 'mission' ? '/assets/icon-niveau-vert.png'
                 : '../assets/icon-niveau-rouge.png')"
-              alt="icon niveau"
+                alt="icon niveau"
             />
-            <span class="niveau">{{ aventurier.experienceLevel }}</span>
+            <span class="niveau">{{ aventurier?.experience_level }}</span>
           </div>
         </div>
         <div id="nom">
-          {{ aventurier.fullName }}
+          {{ aventurier?.full_name }}
         </div>
       </li>
     </ul>
@@ -76,15 +45,24 @@ export default {
   data() {
     return {
       dataAventuriers: [],
+      aventurierFilter: [],
+      nom: null,
+      speciality: null,
+      exp: null,
+
     };
   },
   methods: {
-    async search() {
-      const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/adventurers`);
-      if(response.status === 200){
-        for(const game of response.data){
-          this.dataAventuriers.push(game);
-        }
+    filter() {
+
+    }
+  },
+  async beforeMount() {
+    const response = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/adventurers`);
+    if(response.status === 200){
+      for(const game of response.data){
+        this.dataAventuriers.push(game);
+        this.aventurierFilter.push(game);
       }
     }
   }
@@ -102,6 +80,8 @@ export default {
 .top-page {
   display: flex;
   margin: 2em;
+  width: 100%;
+  width: max-content;
 }
 .block-filtre {
   background-color: white;
@@ -125,6 +105,8 @@ input {
 .ajout {
   background-color: #374869;
   color: white;
+  height: 1.5em;
+  width: 1.5em;
   font-size: 3em;
   border-radius: 12px;
   padding: 0.1em 0.4em 0.1em 0.4em;
@@ -167,11 +149,14 @@ li {
   background-repeat: no-repeat;
   z-index: 1;
 }
+.icon-niveau {
+  z-index: 2;
+}
 #nom {
   background-color: #374869;
   color: white;
   text-align: center;
-  height: 20%;
+  height: 25%;
   width: 100%;
   align-self: flex-end;
   border-radius: 0px 0px 12px 12px;
@@ -179,6 +164,7 @@ li {
 }
 .liste {
   display: flex;
+  flex-wrap: wrap;
 }
 .icon-niveau {
   position: relative;
@@ -200,5 +186,9 @@ li {
 .image-niveau {
   height: 3em;
   width: 3em;
+}
+.block {
+  display: flex;
+  flex-direction: column;
 }
 </style>
