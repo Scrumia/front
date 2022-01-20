@@ -1,4 +1,5 @@
 <template>
+<<<<<<< Updated upstream
   <div>
     <Header v-if="seeNavbar"></Header>
     <div class="container">
@@ -8,6 +9,17 @@
         <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
         <router-link class="routerLink" to="/finances">Finances</router-link>
       </div>
+=======
+  <Header></Header>
+  <div class="container">
+    <div class="dashboard">
+      <router-link class="routerLink" to="/">Requêtes</router-link>
+      <router-link class="routerLink" to="/inventaire">Inventaire</router-link>
+      <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
+      <router-link class="routerLink" to="/finances">Finances</router-link>
+    </div>
+    <div class="content-app">
+>>>>>>> Stashed changes
       <router-view></router-view>
     </div>
   </div>
@@ -35,6 +47,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Montserrat;
 }
 .container {
   display: flex;
@@ -42,34 +55,39 @@ body {
   margin: auto;
 }
 .dashboard {
-  background-color: #c4c4c4;
-  height: 100vh;
-  width: 30vh;
+  background: #e3eeff;
+  height: 40vh;
+  width: 20vh;
   padding: 5px;
   display: flex;
+  justify-content: space-evenly;
   flex-direction: column;
 }
 
-a {
-  font-size: 24px;
+.routerLink {
+  font-size: 20px;
   padding: 10px 15px;
   justify-content: flex-start;
   text-decoration: none;
-  color: black;
+  font-family: Montserrat;
+  font-weight: bold;
+  color: #000000;
   display: flex;
   width: 100%;
   transition: all 0.8s ease;
+  margin: 1px;
 }
 
-a:hover {
-  background: rgb(139, 136, 138);
+.routerLink:hover {
+  background: #ffffff;
+  border-radius: 15px;
 }
-a:active {
-  background: #806969;
-  color: #7c7878;
-}
-a:visited {
-  background: #7c7878;
-  color: none;
+
+.content-app {
+  display: flex;
+  height: 87vh;
+  width: 157vh;
+  border-radius: 30px;
+  background: #fdfdfd;
 }
 </style>
