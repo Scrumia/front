@@ -33,9 +33,7 @@ export default {
 }
 
 img {
-  height: 5em;
-  width: 5em;
-  margin-left: 10px;
+  height: 8vh;
 }
 .contenu {
   display: flex;
