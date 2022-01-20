@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import {ElNotification} from "element-plus";
 
 export default {
   name: "Connexion",
@@ -43,34 +42,16 @@ export default {
         password: this.model.password
       }
       const response = await this.axios.post("https://api-capuche-dopale.herokuapp.com/login", body ).catch((err) => {
-        ElNotification.error({
-          title: 'Error',
-          message: `Username or password is invalid ${err}`,
-          offset: 100,
-        })
+        console.log(err);
       });
-      if(response.status === 401){
-        ElNotification.error({
-          title: 'Error',
-          message: 'Username or password is invalid',
-          offset: 100,
-        });
-      }
       if (
           response.status === 200
       ) {
         window.localStorage.setItem('token', response.data.token);
         window.localStorage.setItem('currentUser', response.data.user);
-        window.localStorage.setItem('isAuth', 'true');
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         this.isAuth = true;
         await this.$router.push({name: "Home"});
-      } else {
-        ElNotification.error({
-          title: 'Error',
-          message: 'Username or password is invalid',
-          offset: 100,
-        });
       }
     }
   }
@@ -86,7 +67,6 @@ export default {
   height: 30em;
   width: 30em;
   margin: 5em;
-
   display: flex;
   align-items: center;
   flex-wrap: wrap;
