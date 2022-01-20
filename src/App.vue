@@ -79,7 +79,10 @@ body {
 
 .content-app {
   display: flex;
-  height: 87vh;
+  min-width: 157vh;
+  min-height: 87vh;
+  height: auto;
+  padding-bottom: 2em;
   width: max-content;
   margin-right: 2em;
   border-radius: 30px;
