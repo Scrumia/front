@@ -33,13 +33,7 @@ export default {
 }
 
 img {
-<<<<<<< Updated upstream
-  height: 5em;
-  width: 5em;
-  margin-left: 10px;
-=======
   height: 8vh;
->>>>>>> Stashed changes
 }
 .contenu {
   display: flex;
