@@ -9,7 +9,7 @@
         </div>
         <i class="fas fa-search logo"></i>
       </div>
-      <button class="ajout">+</button>
+      <button v-show="showAddButton" class="ajout">+</button>
     </div>
     <ul class="liste">
       <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
@@ -57,6 +57,10 @@ export default {
     byQuest: {
       type: Number,
       default: -1,
+    },
+    showAddButton: {
+      type: Boolean,
+      default: true,
     }
   },
   data() {

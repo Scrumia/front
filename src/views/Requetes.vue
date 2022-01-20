@@ -29,7 +29,7 @@
     <RechercheAventurier :showSearchBar="false" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;" :byQuest="questId">
     </RechercheAventurier>
 
-    <RechercheAventurier v-if="isSearchVisible">
+    <RechercheAventurier :showAddButton="false" v-if="isSearchVisible">
     </RechercheAventurier>
 
   </div>
@@ -91,6 +91,18 @@ export default {
 .modal {
   background-color: white;
   border-radius: 12px 12px 12px 12px;
+  border-color: black;
+  position: fixed;
+  top: 20%;
+  bottom: 20%;
+  left: 20%;
+  right: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 80%;
+  overflow-x: hidden;
 }
 .requete {
   background-color: white;
