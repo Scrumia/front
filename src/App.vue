@@ -28,7 +28,7 @@ export default {
     if (token !== undefined && token !== null) {
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else await this.$router.push({name: "Connexion"});
-  }
+  },
 };
 </script>
 

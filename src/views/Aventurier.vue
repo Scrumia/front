@@ -3,16 +3,15 @@
     <div v-show="showSearchBarLocal" class="top-page">
       <div class="block-filtre">
         <div class="saisi-filtre">
-          <input v-model="nom" placeholder="nom" />
-          <input v-model="specialite" placeholder="spécialité" />
-          <input v-model="exp" placeholder="niveau d'expérience" />
+          <input v-on:change="search()" type="text" v-model="model.name" placeholder="nom" />
+          <input v-on:change="search()" type="text" v-model="model.speciality" placeholder="spécialité" />
+          <input v-on:change="search()" type="text" v-model="model.exp" placeholder="niveau d'expérience" />
         </div>
-        <i class="fas fa-search logo"></i>
       </div>
-      <button class="ajout">+</button>
+      <ima class="ajout">+</ima>
     </div>
     <ul class="liste">
-      <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
+      <li v-for="aventurier in aventurierFilter" :key="aventurier.fullName">
         <div class="aventurier">
           <img
               class="image-aventurier"
@@ -22,8 +21,8 @@
           <div class="icon-niveau">
             <img
                 class="image-niveau"
-                :src="aventurier.status == 'dispo' ? '/assets/icon-niveau-bleu.png' :
-                (aventurier.status == 'mission' ? '/assets/icon-niveau-vert.png'
+                :src="aventurier.status == 'rest' ? '/assets/icon-niveau-bleu.png' :
+                (aventurier.status == 'available' ? '/assets/icon-niveau-vert.png'
                 : '../assets/icon-niveau-rouge.png')"
                 alt="icon niveau"
             />
@@ -63,9 +62,11 @@ export default {
     return {
       dataAventuriers: [],
       aventurierFilter: [],
-      nom: null,
-      speciality: null,
-      exp: null,
+      model : {
+        name: null,
+        speciality: null,
+        exp: null,
+      },
       showSearchBarLocal: this.showSearchBar,
       addAdventurerLocal: this.addAdventurer,
     };
@@ -73,7 +74,21 @@ export default {
   methods: {
     toggleSearchBar() {
       this.$emit('displaySearchBar');
-    }
+    },
+    search() {
+      this.aventurierFilter = this.dataAventuriers;
+      console.log('search');
+      if (this.model.name !== null && this.model.name != '')
+        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.full_name.toLowerCase().includes(this.model.name.toLowerCase()));
+      if (this.model.speciality !== null && this.model.speciality != '')
+        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.speciality.name.toLowerCase().includes(this.model.speciality.toLowerCase()));
+      if (this.model.exp !== null && this.model.exp != '') {
+        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level.toString().includes(this.model.exp));
+      }
+    },
+    ready:function(){
+      this.search();
+    },
   },
   async beforeMount() {
     console.log(`beforeMount: ${this.byQuest}`);
@@ -103,12 +118,6 @@ export default {
 };
 </script>
 <style scoped>
-.aventurier-page {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
 .top-page {
   display: flex;
   margin: 2em;
@@ -145,11 +154,6 @@ input {
   border: 1px solid #2a3a51;
   box-shadow: 3px 5px 5px #2a3a51;
 }
-.logo {
-  font-size: 26px;
-  margin-top: 1em;
-  flex-grow: 1;
-}
 .saisi-filtre {
   flex-grow: 3;
   margin-left: 1em;
@@ -160,16 +164,9 @@ li {
   width: 7.5em;
   margin: 1.5em;
 }
-.aventurier-page {
-  background-color: e3eeff;
-  border-radius: 30px;
-  border: none;
-  display: flex;
-  z-index: 0;
-}
 .aventurier {
   display: flex;
-  background-color: blue;
+  background-color: #fee4cb;
   border-radius: 15px 15px 0 0;
   height: 150px;
   width: 120px;
@@ -199,7 +196,7 @@ li {
 }
 .icon-niveau {
   position: relative;
-  right: -0.5em;
+  right: 0.5em;
   top: -1.5em;
   height: 3em;
   width: 7em;
@@ -212,7 +209,7 @@ li {
   position: absolute;
   text-align: start;
   top: 1em;
-  left: 1.2em;
+  left: 0.9em;
 }
 .image-niveau {
   height: 3em;
