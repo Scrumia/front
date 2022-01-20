@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <Header v-if="seeNavbar"></Header>
-    <div class="container">
-      <div class="dashboard" v-if="seeNavbar">
-        <router-link class="routerLink" to="/">Requêtes</router-link>
-        <router-link class="routerLink" to="/inventaire">Inventaire</router-link>
-        <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
-        <router-link class="routerLink" to="/finances">Finances</router-link>
-      </div>
+  <Header v-if="seeNav"></Header>
+  <div class="container">
+    <div class="dashboard" v-if="seeNav">
+      <router-link class="routerLink" to="/">Requêtes</router-link>
+      <router-link class="routerLink" to="/inventaire">Inventaire</router-link>
+      <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
+      <router-link class="routerLink" to="/finances">Finances</router-link>
+    </div>
+    <div class="content-app">
       <router-view></router-view>
     </div>
   </div>

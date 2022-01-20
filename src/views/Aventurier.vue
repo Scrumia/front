@@ -39,7 +39,6 @@
         </li>
       </ul>
     </div>
-<<<<<<< Updated upstream
     <button class="ajout" v-on:click="search()">+</button>
   </div>
   <div>
@@ -67,8 +66,6 @@
         </div>
       </li>
     </ul>
-=======
->>>>>>> Stashed changes
   </div>
   
 </template>
