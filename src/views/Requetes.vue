@@ -15,7 +15,20 @@
   </div>
 
   <div v-if="isModalVisible" class="modal">
-    <div @click="closeModal">X</div>
+    <div class="icon-delete">
+      <img 
+        class="image-delete"
+        alt="delete"
+        src="/assets/icon_delete.png"
+        @click="closeModal"
+      />
+    </div>
+    <div v-if="questStatus === 'pending'">
+      Cette quête est en attente !
+    </div>
+    <div v-else> 
+      Cette quête n'est plus en attente, et l'équipe ne peut pas être altérée.
+    </div>
     <div class="modalQuestTitle"> {{modalTitle}} </div>  
     {{ modalDesc }}
 
@@ -38,7 +51,7 @@
 
     <RechercheAventurier 
       :showAddButton="false" 
-      v-if="isSearchVisible" 
+      v-if="isSearchVisible && questStatus === 'pending'" 
       :canCrudToQuest="questId" 
       @closeSearch="isSearchVisible = false;"
     >
@@ -62,6 +75,7 @@ export default {
       this.modalTitle = quest.name;
       this.duration = quest.duration;
       this.questId = quest.id;
+      this.questStatus = quest.status;
       this.expiration = `${quest.expiration_date.substring(8, 10)}/${quest.expiration_date.substring(5, 7)}/${quest.expiration_date.substring(0, 4)}`;
     },
     closeModal() {
@@ -189,6 +203,11 @@ body {
     border-radius: 20px;
     padding: 10px;
     color: rgb(136, 136, 136);
+}
+
+.image-delete {
+  height: 3em;
+  width: 3em;
 }
 
 </style>
