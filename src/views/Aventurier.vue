@@ -32,17 +32,19 @@
     </div>
     <ul class="liste">
       <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
-        <div class="aventurier" @click="addToQuest(aventurier.id)">
+        <div class="aventurier">
           <img
               class="image-aventurier"
               :src="'/assets/' + aventurier?.speciality.name + '.png'"
               alt="aventurier"
+              @click="addToQuest(aventurier.id)"
           />
           <div v-if="canDelete" class="icon-delete">
             <img 
               class="image-delete"
               alt="delete"
               src="/assets/icon_delete.png"
+              @click="deleteFromQuest(aventurier.id)"
             />
           </div>
           <div class="icon-niveau">
@@ -88,7 +90,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    canAddToQuest: {
+    canCrudToQuest: {
       type: Number,
       default: -1,
     },
@@ -115,8 +117,8 @@ export default {
       this.$emit('displaySearchBar');
     },
     async addToQuest(adventurerId) {
-      console.log(`addToQuest: ${this.canAddToQuest}, ${adventurerId}`);
-      const postURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canAddToQuest}/adventurers`;
+      console.log(`addToQuest: ${this.canCrudToQuest}, ${adventurerId}`);
+      const postURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canCrudToQuest}/adventurers`;
       const postResponse = await this.axios.post(postURL, {
         adventurer_id: adventurerId
       });
@@ -128,9 +130,9 @@ export default {
       }
     },
     async deleteFromQuest(adventurerId) {
-      console.log(`deleteFromQuest: ${this.canAddToQuest}, ${adventurerId}`);
-      const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canAddToQuest}/adventurers/${adventurerId}`;
-      const deleteResponse = await this.axios.post(deleteURL);
+      console.log(`deleteFromQuest: ${this.canCrudToQuest}, ${adventurerId}`);
+      const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canCrudToQuest}/adventurers/${adventurerId}`;
+      const deleteResponse = await this.axios.delete(deleteURL);
       if(deleteResponse.status === 200) {
         console.log("DELETE ok! :)");
       }

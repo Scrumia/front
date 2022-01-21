@@ -26,10 +26,22 @@
       Date d'expiration: {{ expiration }}
     </div>
 
-    <RechercheAventurier :showSearchBar="false" :canDelete="true" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;" :byQuest="questId">
+    <RechercheAventurier 
+      :showSearchBar="false" 
+      :canDelete="true" 
+      :addAdventurer="true" 
+      @displaySearchBar="isSearchVisible = true;" 
+      :byQuest="questId"
+      :canCrudToQuest="questId"
+    >
     </RechercheAventurier>
 
-    <RechercheAventurier :showAddButton="false" v-if="isSearchVisible" :canAddToQuest="questId" @closeSearch="isSearchVisible = false;">
+    <RechercheAventurier 
+      :showAddButton="false" 
+      v-if="isSearchVisible" 
+      :canCrudToQuest="questId" 
+      @closeSearch="isSearchVisible = false;"
+    >
     </RechercheAventurier>
 
   </div>
