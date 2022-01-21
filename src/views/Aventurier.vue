@@ -127,6 +127,13 @@ export default {
         console.log(`OOPS! POST response status = ${postResponse.status}`);
       }
     },
+    async deleteFromQuest(adventurerId) {
+      const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canAddToQuest}/adventurers/${adventurerId}`;
+      const deleteResponse = await this.axios.post(deleteURL);
+      if(deleteResponse.status === 200) {
+        console.log("DELETE ok! :)");
+      }
+    },
     search() {
       this.aventurierFilter = this.dataAventuriers;
       if (this.model.name !== null && this.model.name != '')
