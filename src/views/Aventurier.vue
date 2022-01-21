@@ -32,12 +32,13 @@
     </div>
     <ul class="liste">
       <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
-        <div class="aventurier" @click="addToQuest(aventurier.id)">
+        <div class="aventurier">
           <div class="icon-delete">
             <img
-                class="image-delete"
-                alt="delete"
-                src="/assets/icon_delete.png"
+              class="image-delete"
+              alt="delete"
+              src="/assets/icon_delete.png"
+              @click="deleteAdventurer(aventurier.id)"
             />
           </div>
           <img
@@ -128,13 +129,16 @@ export default {
         console.log(`OOPS! POST response status = ${postResponse.status}`);
       }
     },
-    async deleteFromQuest(adventurerId) {
-      if (!this.canDelete) return;
-      console.log(`deleteFromQuest: ${this.canCrudToQuest}, ${adventurerId}`);
-      const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canCrudToQuest}/adventurers/${adventurerId}`;
-      const deleteResponse = await this.axios.delete(deleteURL);
-      if(deleteResponse.status === 200) {
-        console.log("DELETE ok! :)");
+    async deleteAdventurer(adventurerId) {
+      if (!this.canDelete){
+        console.log("ici pour supprimer un aventurier");
+      } else {
+        console.log(`deleteFromQuest: ${this.canCrudToQuest}, ${adventurerId}`);
+        const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canCrudToQuest}/adventurers/${adventurerId}`;
+        const deleteResponse = await this.axios.delete(deleteURL);
+        if(deleteResponse.status === 200) {
+          console.log("DELETE ok! :)");
+        }
       }
     },
     search() {
