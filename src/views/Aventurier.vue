@@ -31,13 +31,20 @@
       <label>En mission</label>
     </div>
     <ul class="liste">
-      <li v-for="aventurier in aventurierFilter" :key="aventurier.fullName">
-        <div class="aventurier">
+      <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
+        <div class="aventurier" @click="addToQuest(aventurier.id)">
           <img
               class="image-aventurier"
               :src="'/assets/' + aventurier?.speciality.name + '.png'"
               alt="aventurier"
           />
+          <div v-if="canDelete" class="icon-delete">
+            <img 
+              class="image-delete"
+              alt="delete"
+              src="/assets/icon_delete.png"
+            />
+          </div>
           <div class="icon-niveau">
             <img
                 class="image-niveau"
@@ -76,6 +83,18 @@ export default {
     byQuest: {
       type: Number,
       default: -1,
+    },
+    showAddButton: {
+      type: Boolean,
+      default: true,
+    },
+    canAddToQuest: {
+      type: Number,
+      default: -1,
+    },
+    canDelete: {
+      type: Boolean,
+      default: false,
     }
   },
   data() {
@@ -94,6 +113,19 @@ export default {
   methods: {
     toggleSearchBar() {
       this.$emit('displaySearchBar');
+    },
+    async addToQuest(adventurerId) {
+      console.log(`addToQuest: ${this.canAddToQuest}, ${adventurerId}`);
+      const postURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canAddToQuest}/adventurers`;
+      const postResponse = await this.axios.post(postURL, {
+        adventurer_id: adventurerId
+      });
+      if(postResponse.status === 200) {
+        console.log("le POST a bien fonctionné! :)");
+        this.$emit('closeSearch');
+      } else {
+        console.log(`OOPS! POST response status = ${postResponse.status}`);
+      }
     },
     search() {
       this.aventurierFilter = this.dataAventuriers;
@@ -194,9 +226,6 @@ li {
   background-repeat: no-repeat;
   z-index: 1;
 }
-.icon-niveau {
-  z-index: 2;
-}
 #nom {
   background-color: #374869;
   color: white;
@@ -220,6 +249,15 @@ li {
   background-repeat: no-repeat;
   z-index: 2;
 }
+.icon-delete {
+  position: relative;
+  left: 0.5em;
+  top: -1.5em;
+  height: 3em;
+  width: 7em;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
 .niveau {
   z-index: 3;
   color: white;
@@ -229,6 +267,10 @@ li {
   left: 0.9em;
 }
 .image-niveau {
+  height: 3em;
+  width: 3em;
+}
+.image-delete {
   height: 3em;
   width: 3em;
 }
