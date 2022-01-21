@@ -33,18 +33,18 @@
     <ul class="liste">
       <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
         <div class="aventurier" @click="addToQuest(aventurier.id)">
+          <div class="icon-delete">
+            <img
+                class="image-delete"
+                alt="delete"
+                src="/assets/icon_delete.png"
+            />
+          </div>
           <img
               class="image-aventurier"
               :src="'/assets/' + aventurier?.speciality.name + '.png'"
               alt="aventurier"
           />
-          <div v-if="canDelete" class="icon-delete">
-            <img 
-              class="image-delete"
-              alt="delete"
-              src="/assets/icon_delete.png"
-            />
-          </div>
           <div class="icon-niveau">
             <img
                 class="image-niveau"
@@ -225,6 +225,8 @@ li {
   text-align: center;
   background-repeat: no-repeat;
   z-index: 1;
+  position: relative;
+  left: -1.5em;
 }
 #nom {
   background-color: #374869;
@@ -243,18 +245,19 @@ li {
 .icon-niveau {
   position: relative;
   right: 0.5em;
-  top: -1.5em;
+  top: -1.2em;
+  left: -2.7em;
   height: 3em;
-  width: 7em;
+  width: 3em;
   background-repeat: no-repeat;
   z-index: 2;
 }
 .icon-delete {
   position: relative;
-  left: 0.5em;
-  top: -1.5em;
-  height: 3em;
-  width: 7em;
+  left: -0.7em;
+  top: -0.7em;
+  height: 2em;
+  width: 2em;
   background-repeat: no-repeat;
   z-index: 2;
 }
@@ -271,8 +274,8 @@ li {
   width: 3em;
 }
 .image-delete {
-  height: 3em;
-  width: 3em;
+  height: 2em;
+  width: 2em;
 }
 .block {
   display: flex;
