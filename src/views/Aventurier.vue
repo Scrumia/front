@@ -128,6 +128,7 @@ export default {
       }
     },
     async deleteFromQuest(adventurerId) {
+      console.log(`deleteFromQuest: ${this.canAddToQuest}, ${adventurerId}`);
       const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canAddToQuest}/adventurers/${adventurerId}`;
       const deleteResponse = await this.axios.post(deleteURL);
       if(deleteResponse.status === 200) {
