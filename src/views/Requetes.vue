@@ -29,7 +29,7 @@
     <RechercheAventurier :showSearchBar="false" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;" :byQuest="questId">
     </RechercheAventurier>
 
-    <RechercheAventurier :showAddButton="false" v-if="isSearchVisible">
+    <RechercheAventurier :showAddButton="false" v-if="isSearchVisible" :canDelete="true" :canAddToQuest="questId" @closeSearch="isSearchVisible = false;">
     </RechercheAventurier>
 
   </div>
@@ -101,7 +101,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-height: 80%;
   overflow-x: hidden;
 }
 .requete {
