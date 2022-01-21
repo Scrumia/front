@@ -3,8 +3,8 @@
     <div class="block">
       <img class="logo" src=/assets/logo.svg alt="icon niveau" height="180" width="180"/>
       <div>
-        <input type="text" v-model="model.email" placeholder="Email">
-        <input type="password" v-model="model.password" placeholder="Mot de passe">
+        <input type="text" v-model="model.email" placeholder="Email" />
+        <input type="password" v-model="model.password" placeholder="Mot de passe" />
         <button v-on:click="login()">Se connecter</button>
       </div>
     </div>
@@ -12,15 +12,14 @@
 </template>
 
 <script>
-
 export default {
   name: "Connexion",
-  el: '#App',
+  el: "#App",
   data() {
     return {
       model: {
         email: "",
-        password: ""
+        password: "",
       },
       isAuth: false,
     };
@@ -31,31 +30,33 @@ export default {
   methods: {
     async auth() {
       this.isAuth = true;
-      console.log('auth is call');
+      console.log("auth is call");
     },
     async load() {
-      window.localStorage.setItem('isAuth', 'false');
+      window.localStorage.setItem("isAuth", "false");
     },
     async login() {
       const body = {
         email: this.model.email,
-        password: this.model.password
-      }
-      const response = await this.axios.post("https://api-capuche-dopale.herokuapp.com/login", body ).catch((err) => {
-        console.log(err);
-      });
-      if (
-          response.status === 200
-      ) {
-        window.localStorage.setItem('token', response.data.token);
-        window.localStorage.setItem('currentUser', response.data.user);
-        this.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+        password: this.model.password,
+      };
+      const response = await this.axios
+        .post("https://api-capuche-dopale.herokuapp.com/login", body)
+        .catch((err) => {
+          console.log(err);
+        });
+      if (response.status === 200) {
+        window.localStorage.setItem("token", response.data.token);
+        window.localStorage.setItem("currentUserName", response.data.user?.full_name);
+        this.axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data.token}`;
         this.isAuth = true;
-        await this.$router.push({name: "Home"});
+        await this.$router.push({ name: "Home" });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -88,7 +89,7 @@ input {
   flex-grow: 1;
 }
 button {
-  background-color: #94ABDD;
+  background-color: #94abdd;
   color: white;
   border-radius: 12px;
   margin: 1.5em 3em 1.5em 3em;
