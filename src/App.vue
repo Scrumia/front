@@ -3,9 +3,7 @@
   <div class="container">
     <div class="dashboard" v-if="seeNavbar">
       <router-link class="routerLink" to="/">Requêtes</router-link>
-      <router-link class="routerLink" to="/inventaire">Inventaire</router-link>
       <router-link class="routerLink" to="/aventurier">Aventurier</router-link>
-      <router-link class="routerLink" to="/finances">Finances</router-link>
     </div>
     <div class="content-app">
       <router-view></router-view>
@@ -49,8 +47,9 @@ body {
   margin: auto;
 }
 .dashboard {
+  margin-top: 2.5em;
   background: #e3eeff;
-  height: 40vh;
+  height: 20vh;
   width: 20vh;
   padding: 5px;
   display: flex;

@@ -56,8 +56,13 @@
             <span class="niveau">{{ aventurier?.experience_level }}</span>
           </div>
         </div>
-        <div id="nom">
-          {{ aventurier?.full_name }}
+        <div class="info-aventurier">
+          <div class="speciality">
+            {{aventurier.speciality?.name}}
+          </div>
+          <div id="nom">
+            {{ aventurier?.full_name }}
+          </div>
         </div>
       </li>
     </ul>
@@ -220,6 +225,10 @@ li {
   height: 150px;
   width: 120px;
 }
+.speciality {
+  background-color: #fee4cb;
+  text-align: center;
+}
 .image-aventurier {
   background-size: 1em;
   text-align: center;
@@ -232,7 +241,7 @@ li {
   background-color: #374869;
   color: white;
   text-align: center;
-  height: 25%;
+  height: 2.5em;
   width: 100%;
   align-self: flex-end;
   border-radius: 0px 0px 12px 12px;
@@ -288,5 +297,12 @@ label {
 }
 .icon {
   margin-left: 2em;
+}
+.info-aventurier {
+  position: relative;
+  top: -1.2em;
+}
+li {
+  margin-bottom: 3em;
 }
 </style>
