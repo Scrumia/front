@@ -4,11 +4,9 @@
     <div class="home-logo">
       <img src="../assets/logo-monochrome.svg" />
     </div>
-    <div v-if="isAuth" class="auth">
-
-    </div>
-    <div v-else class="auth">
-      <a href="" class="signin">
+    <label>{{this.utilisateurNom}}</label>
+    <div class="auth">
+      <a href="">
         <img src="../assets/logo-monochrome.svg" alt="">
       </a>
     </div>
@@ -19,6 +17,15 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      utilisateurNom: '',
+    };
+  },
+  beforeMount() {
+    const user = localStorage["user"];
+    if(user !== null && user !== undefined) this.utilisateurNom = user.full_name;
+  }
 };
 </script>
 
@@ -40,7 +47,7 @@ img {
   justify-content: center;
   align-items: center;
   height: 10vh;
-  
+
 }
 
 </style>
