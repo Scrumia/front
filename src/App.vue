@@ -47,8 +47,9 @@ body {
   margin: auto;
 }
 .dashboard {
+  margin-top: 2.5em;
   background: #e3eeff;
-  height: 40vh;
+  height: 20vh;
   width: 20vh;
   padding: 5px;
   display: flex;
