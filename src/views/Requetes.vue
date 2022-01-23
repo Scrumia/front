@@ -81,6 +81,10 @@ export default {
     closeModal() {
       this.isModalVisible = false;
       this.isSearchVisible = false;
+    },
+    refreshModal() {
+      this.isModalVisible = false;
+      this.isModalVisible = true;
     }
   },
   data() {

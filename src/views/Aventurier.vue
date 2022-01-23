@@ -130,21 +130,34 @@ export default {
       if(postResponse.status === 200) {
         console.log("le POST a bien fonctionné! :)");
         this.$emit('closeSearch');
+        this.callRefresh();
       } else {
         console.log(`OOPS! POST response status = ${postResponse.status}`);
       }
     },
     async deleteAdventurer(adventurerId) {
       if (!this.canDelete){
-        console.log("ici pour supprimer un aventurier");
+        //ici pour supprimer un aventurier
+        console.log(`deleteAdventurer = ${adventurerId}`);
+        const deleteURL = `https://api-capuche-dopale.herokuapp.com/adventurers/${adventurerId}`;
+        const deleteResponse = await this.axios.delete(deleteURL);
+        if(deleteResponse.status === 200) {
+          console.log("DELETE ok! :)");
+          this.callRefresh();
+        }
       } else {
         console.log(`deleteFromQuest: ${this.canCrudToQuest}, ${adventurerId}`);
         const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canCrudToQuest}/adventurers/${adventurerId}`;
         const deleteResponse = await this.axios.delete(deleteURL);
         if(deleteResponse.status === 200) {
           console.log("DELETE ok! :)");
+          this.callRefresh();
         }
       }
+    },
+    callRefresh() {
+      this.$emit('callRefresh');
+      console.log("callRefresh");
     },
     search() {
       this.aventurierFilter = this.dataAventuriers;
