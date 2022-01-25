@@ -26,7 +26,7 @@
     <div v-if="questStatus === 'pending'">
       Cette quête est en attente !
     </div>
-    <div v-else> 
+    <div v-else class="questWarning"> 
       Cette quête n'est plus en attente, et l'équipe ne peut pas être altérée.
     </div>
     <div class="modalQuestTitle"> {{modalTitle}} </div>  
@@ -42,7 +42,7 @@
     <RechercheAventurier 
       :showSearchBar="false" 
       :canDelete="true" 
-      :addAdventurer="true" 
+      :addAdventurer="questStatus === 'pending'" 
       @displaySearchBar="isSearchVisible = true;" 
       :byQuest="questId"
       :canCrudToQuest="questId"
@@ -132,6 +132,11 @@ export default {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
+}
+.questWarning {
+  border: 1px red;
+  padding: 5px;
+  color: red;
 }
 .requete {
   background-color: white;

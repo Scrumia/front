@@ -8,7 +8,7 @@
           <input v-on:change="search()" type="text" v-model="model.exp" placeholder="niveau d'expérience" />
         </div>
       </div>
-      <ima class="ajout">+</ima>
+      <ima class="ajout" v-if="showAddButton">+</ima>
     </div>
     <div class="legende">
       <img
@@ -136,6 +136,7 @@ export default {
       }
     },
     async deleteAdventurer(adventurerId) {
+      if(!this.showAddButton) return;
       if (!this.canDelete){
         //ici pour supprimer un aventurier
         console.log(`deleteAdventurer = ${adventurerId}`);
@@ -166,7 +167,10 @@ export default {
       if (this.model.speciality !== null && this.model.speciality != '')
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.speciality.name.toLowerCase().includes(this.model.speciality.toLowerCase()));
       if (this.model.exp !== null && this.model.exp != '') {
-        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level.toString().includes(this.model.exp));
+        //this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level.toString().includes(this.model.exp));
+        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level >= parseInt(this.model.exp));
+        console.log(`this.model.exp = ${typeof parseInt(this.model.exp)} ${parseInt(this.model.exp)}`);
+        console.log(`exp_level = ${typeof this.aventurierFilter.experience_level}`);
       }
     },
     ready:function(){
