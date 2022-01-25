@@ -8,7 +8,7 @@
           <input v-on:change="search()" type="text" v-model="model.exp" placeholder="niveau d'expérience" />
         </div>
       </div>
-      <ima class="ajout">+</ima>
+      <ima class="ajout" v-if="showAddButton">+</ima>
     </div>
     <div class="legende">
       <img
@@ -32,18 +32,20 @@
     </div>
     <ul class="liste">
       <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
-        <div class="aventurier" @click="addToQuest(aventurier.id)">
+        <div class="aventurier">
           <div class="icon-delete">
             <img
-                class="image-delete"
-                alt="delete"
-                src="/assets/icon_delete.png"
+              class="image-delete"
+              alt="delete"
+              src="/assets/icon_delete.png"
+              @click="deleteAdventurer(aventurier.id)"
             />
           </div>
           <img
               class="image-aventurier"
               :src="'/assets/' + aventurier?.speciality.name + '.png'"
               alt="aventurier"
+              @click="addToQuest(aventurier.id)"
           />
           <div class="icon-niveau">
             <img
@@ -93,7 +95,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    canAddToQuest: {
+    canCrudToQuest: {
       type: Number,
       default: -1,
     },
@@ -120,17 +122,43 @@ export default {
       this.$emit('displaySearchBar');
     },
     async addToQuest(adventurerId) {
-      console.log(`addToQuest: ${this.canAddToQuest}, ${adventurerId}`);
-      const postURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canAddToQuest}/adventurers`;
+      console.log(`addToQuest: ${this.canCrudToQuest}, ${adventurerId}`);
+      const postURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canCrudToQuest}/adventurers`;
       const postResponse = await this.axios.post(postURL, {
         adventurer_id: adventurerId
       });
       if(postResponse.status === 200) {
         console.log("le POST a bien fonctionné! :)");
         this.$emit('closeSearch');
+        this.callRefresh();
       } else {
         console.log(`OOPS! POST response status = ${postResponse.status}`);
       }
+    },
+    async deleteAdventurer(adventurerId) {
+      if(!this.showAddButton) return;
+      if (!this.canDelete){
+        //ici pour supprimer un aventurier
+        console.log(`deleteAdventurer = ${adventurerId}`);
+        const deleteURL = `https://api-capuche-dopale.herokuapp.com/adventurers/${adventurerId}`;
+        const deleteResponse = await this.axios.delete(deleteURL);
+        if(deleteResponse.status === 200) {
+          console.log("DELETE ok! :)");
+          this.callRefresh();
+        }
+      } else {
+        console.log(`deleteFromQuest: ${this.canCrudToQuest}, ${adventurerId}`);
+        const deleteURL = `https://api-capuche-dopale.herokuapp.com/requests/${this.canCrudToQuest}/adventurers/${adventurerId}`;
+        const deleteResponse = await this.axios.delete(deleteURL);
+        if(deleteResponse.status === 200) {
+          console.log("DELETE ok! :)");
+          this.callRefresh();
+        }
+      }
+    },
+    callRefresh() {
+      this.$emit('callRefresh');
+      console.log("callRefresh");
     },
     search() {
       this.aventurierFilter = this.dataAventuriers;
@@ -140,6 +168,8 @@ export default {
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.speciality.name.toLowerCase().includes(this.model.speciality.toLowerCase()));
       if (this.model.exp !== null && this.model.exp != '') {
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level.toString().includes(this.model.exp));
+        //peut-être à changer pour le code en-dessous pour mieux filtrer
+        //this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level >= parseInt(this.model.exp));
       }
     },
     ready:function(){

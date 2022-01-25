@@ -15,7 +15,20 @@
   </div>
 
   <div v-if="isModalVisible" class="modal">
-    <div @click="closeModal">X</div>
+    <div class="icon-delete">
+      <img 
+        class="image-delete"
+        alt="delete"
+        src="/assets/icon_delete.png"
+        @click="closeModal"
+      />
+    </div>
+    <div v-if="questStatus === 'pending'">
+      Cette quête est en attente !
+    </div>
+    <div v-else class="questWarning"> 
+      Cette quête n'est plus en attente, et l'équipe ne peut pas être altérée.
+    </div>
     <div class="modalQuestTitle"> {{modalTitle}} </div>  
     {{ modalDesc }}
 
@@ -26,10 +39,22 @@
       Date d'expiration: {{ expiration }}
     </div>
 
-    <RechercheAventurier :showSearchBar="false" :addAdventurer="true" @displaySearchBar="isSearchVisible = true;" :byQuest="questId">
+    <RechercheAventurier 
+      :showSearchBar="false" 
+      :canDelete="true" 
+      :addAdventurer="questStatus === 'pending'" 
+      @displaySearchBar="isSearchVisible = true;" 
+      :byQuest="questId"
+      :canCrudToQuest="questId"
+    >
     </RechercheAventurier>
 
-    <RechercheAventurier :showAddButton="false" v-if="isSearchVisible" :canDelete="true" :canAddToQuest="questId" @closeSearch="isSearchVisible = false;">
+    <RechercheAventurier 
+      :showAddButton="false" 
+      v-if="isSearchVisible && questStatus === 'pending'" 
+      :canCrudToQuest="questId" 
+      @closeSearch="isSearchVisible = false;"
+    >
     </RechercheAventurier>
 
   </div>
@@ -50,11 +75,16 @@ export default {
       this.modalTitle = quest.name;
       this.duration = quest.duration;
       this.questId = quest.id;
+      this.questStatus = quest.status;
       this.expiration = `${quest.expiration_date.substring(8, 10)}/${quest.expiration_date.substring(5, 7)}/${quest.expiration_date.substring(0, 4)}`;
     },
     closeModal() {
       this.isModalVisible = false;
       this.isSearchVisible = false;
+    },
+    refreshModal() {
+      this.isModalVisible = false;
+      this.isModalVisible = true;
     }
   },
   data() {
@@ -102,6 +132,11 @@ export default {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
+}
+.questWarning {
+  border: 1px red;
+  padding: 5px;
+  color: red;
 }
 .requete {
   background-color: white;
@@ -177,6 +212,11 @@ body {
     border-radius: 20px;
     padding: 10px;
     color: rgb(136, 136, 136);
+}
+
+.image-delete {
+  height: 3em;
+  width: 3em;
 }
 
 </style>
