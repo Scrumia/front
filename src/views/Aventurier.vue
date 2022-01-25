@@ -167,10 +167,9 @@ export default {
       if (this.model.speciality !== null && this.model.speciality != '')
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.speciality.name.toLowerCase().includes(this.model.speciality.toLowerCase()));
       if (this.model.exp !== null && this.model.exp != '') {
-        //this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level.toString().includes(this.model.exp));
-        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level >= parseInt(this.model.exp));
-        console.log(`this.model.exp = ${typeof parseInt(this.model.exp)} ${parseInt(this.model.exp)}`);
-        console.log(`exp_level = ${typeof this.aventurierFilter.experience_level}`);
+        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level.toString().includes(this.model.exp));
+        //peut-être à changer pour le code en-dessous pour mieux filtrer
+        //this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level >= parseInt(this.model.exp));
       }
     },
     ready:function(){
