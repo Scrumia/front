@@ -107,7 +107,6 @@ export default {
         this.dataRequetes.push(game);
       }
     }
-    if(response.status === 401) localStorage.clear();
   }
 };
 </script>

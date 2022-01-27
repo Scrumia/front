@@ -234,7 +234,6 @@ export default {
         if(response.status === 200) {
           this.specialities = reponseSpecialities.data;
         }
-        if(response.status === 401) localStorage.clear();
       }
     } else {
       this.dataAventuriers = [];
@@ -246,7 +245,6 @@ export default {
           this.aventurierFilter.push(game);
         }
       }
-      if(response.status === 401) localStorage.clear();
     }
   },
 };
