@@ -5,7 +5,7 @@
         <div class="saisi-filtre">
           <input class="input-filtre" v-on:change="search()" type="text" v-model="model.name" placeholder="nom" />
           <input class="input-filtre" v-on:change="search()" type="text" v-model="model.speciality" placeholder="spécialité" />
-          <input class="input-filtre" v-on:change="search()" type="text" v-model="model.exp" placeholder="niveau d'expérience" />
+          <input class="input-filtre" v-on:change="search()" type="number" v-model="model.exp" placeholder="niveau d'expérience" />
         </div>
       </div>
       <ima class="ajout" v-if="showAddButton" v-on:click="this.isModalVisible = true">+</ima>
@@ -45,7 +45,7 @@
 
     </div>
     <ul class="liste">
-      <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
+      <li v-for="aventurier in aventurierFilter" :key="aventurier.fullName">
         <div class="aventurier">
           <div class="icon-delete">
             <img
@@ -183,14 +183,13 @@ export default {
     },
     search() {
       this.aventurierFilter = this.dataAventuriers;
+      console.log(this.model.name);
       if (this.model.name !== null && this.model.name != '')
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.full_name.toLowerCase().includes(this.model.name.toLowerCase()));
       if (this.model.speciality !== null && this.model.speciality != '')
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.speciality.name.toLowerCase().includes(this.model.speciality.toLowerCase()));
       if (this.model.exp !== null && this.model.exp != '') {
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level == this.model.exp);
-        //peut-être à changer pour le code en-dessous pour mieux filtrer
-        //this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level >= parseInt(this.model.exp));
       }
     },
     cancel() {
