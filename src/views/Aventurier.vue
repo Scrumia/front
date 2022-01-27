@@ -3,12 +3,12 @@
     <div v-show="showSearchBarLocal" class="top-page">
       <div class="block-filtre">
         <div class="saisi-filtre">
-          <input v-on:change="search()" type="text" v-model="model.name" placeholder="nom" />
-          <input v-on:change="search()" type="text" v-model="model.speciality" placeholder="spécialité" />
-          <input v-on:change="search()" type="text" v-model="model.exp" placeholder="niveau d'expérience" />
+          <input class="input-filtre" v-on:change="search()" type="text" v-model="model.name" placeholder="nom" />
+          <input class="input-filtre" v-on:change="search()" type="text" v-model="model.speciality" placeholder="spécialité" />
+          <input class="input-filtre" v-on:change="search()" type="text" v-model="model.exp" placeholder="niveau d'expérience" />
         </div>
       </div>
-      <ima class="ajout" v-if="showAddButton">+</ima>
+      <ima class="ajout" v-if="showAddButton" v-on:click="this.isModalVisible = true">+</ima>
     </div>
     <div class="legende">
       <img
@@ -29,6 +29,20 @@
           alt="aventurier"
       />
       <label>En mission</label>
+    </div>
+    <div v-if="isModalVisible" class="modal">
+
+      <input class="form" type="text" v-model="createModel.name" placeholder="nom" />
+      <input class="form" type="number" v-model="createModel.exp" placeholder="niveau d'expérience" />
+      <select class="form" v-on:change="changeSpeciality($event)">
+        <option v-for="speciality in specialities" :key="speciality.name" v-bind:value="speciality.id">{{speciality.name}}</option>
+      </select>
+
+      <div class="group-button-modal">
+        <button class="button-modal cancel" v-on:click="cancel()">Annuler</button>
+        <button class="button-modal validate" v-on:click="validate()">Valider</button>
+      </div>
+
     </div>
     <ul class="liste">
       <li v-for="aventurier in dataAventuriers" :key="aventurier.fullName">
@@ -113,8 +127,15 @@ export default {
         speciality: null,
         exp: null,
       },
+      createModel : {
+        name: null,
+        speciality_id: 10,
+        exp: null,
+      },
       showSearchBarLocal: this.showSearchBar,
       addAdventurerLocal: this.addAdventurer,
+      isModalVisible: true,
+      specialities: [],
     };
   },
   methods: {
@@ -167,10 +188,34 @@ export default {
       if (this.model.speciality !== null && this.model.speciality != '')
         this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.speciality.name.toLowerCase().includes(this.model.speciality.toLowerCase()));
       if (this.model.exp !== null && this.model.exp != '') {
-        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level.toString().includes(this.model.exp));
+        this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level == this.model.exp);
         //peut-être à changer pour le code en-dessous pour mieux filtrer
         //this.aventurierFilter = this.aventurierFilter.filter(aventurier => aventurier.experience_level >= parseInt(this.model.exp));
       }
+    },
+    cancel() {
+      this.isModalVisible = false;
+      this.createModel.name = null;
+      this.createModel.exp = null;
+    },
+    async validate() {
+      if(this.createModel.name != null && this.createModel.exp != null) {
+        const body = {
+          fullName: this.createModel.name,
+          speciality_id: this.createModel.speciality_id,
+          experience_level: this.createModel.exp
+        };
+        const response = await this.axios.post(`https://api-capuche-dopale.herokuapp.com/adventurers`, body)
+            .catch((err) => {
+          console.log(err);
+        });
+        if(response.status === 201) {
+          this.isModalVisible = false;
+        }
+      }
+    },
+    changeSpeciality(event) {
+      this.createModel.speciality_id = event.target.value;
     },
     ready:function(){
       this.search();
@@ -185,6 +230,10 @@ export default {
         for(const game of response.data){
           this.dataAventuriers.push(game);
           this.aventurierFilter.push(game);
+        }
+        const reponseSpecialities = await this.axios.get(`https://api-capuche-dopale.herokuapp.com/specialities`);
+        if(response.status === 200) {
+          this.specialities = reponseSpecialities.data;
         }
       }
     } else {
@@ -218,7 +267,7 @@ export default {
   height: min-content;
   display: flex;
 }
-input {
+.input-filtre {
   background-color: white;
   border-radius: 12px;
   margin: 1em 1.5em 1em 1.5em;
@@ -334,5 +383,43 @@ label {
 }
 li {
   margin-bottom: 3em;
+}
+.modal {
+  background-color: white;
+  border-radius: 12px;
+  border-color: black;
+  position: fixed;
+  top: 20%;
+  bottom: 20%;
+  left: 20%;
+  right: 20%;
+  display: flex;
+  flex-direction: column;
+  z-index: 4;
+}
+.form {
+  margin : 0.5em;
+  width: 20em;
+  height: 3em;
+  border-radius: 8px;
+  border: 1px solid #b5b5b5;
+  box-shadow: 3px 5px 5px #b5b5b5;
+}
+.cancel {
+  background-color: #a70e0e;
+}
+.validate {
+  background-color: #0d730d;
+}
+.button-modal {
+  color: white;
+  padding: 1em 2em 1em 2em;
+  border: none;
+  border-radius: 12px;
+  margin: 2em;
+}
+.group-button-modal {
+  display: flex;
+  flex-direction: row;
 }
 </style>
