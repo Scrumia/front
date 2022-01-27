@@ -16,7 +16,7 @@
 
   <div v-if="isModalVisible" class="modal">
     <div class="icon-delete">
-      <img 
+      <img
         class="image-delete"
         alt="delete"
         src="/assets/icon_delete.png"
@@ -26,10 +26,10 @@
     <div v-if="questStatus === 'pending'">
       Cette quête est en attente !
     </div>
-    <div v-else class="questWarning"> 
+    <div v-else class="questWarning">
       Cette quête n'est plus en attente, et l'équipe ne peut pas être altérée.
     </div>
-    <div class="modalQuestTitle"> {{modalTitle}} </div>  
+    <div class="modalQuestTitle"> {{modalTitle}} </div>
     {{ modalDesc }}
 
     <div>
@@ -39,20 +39,20 @@
       Date d'expiration: {{ expiration }}
     </div>
 
-    <RechercheAventurier 
-      :showSearchBar="false" 
-      :canDelete="true" 
-      :addAdventurer="questStatus === 'pending'" 
-      @displaySearchBar="isSearchVisible = true;" 
+    <RechercheAventurier
+      :showSearchBar="false"
+      :canDelete="true"
+      :addAdventurer="questStatus === 'pending'"
+      @displaySearchBar="isSearchVisible = true;"
       :byQuest="questId"
       :canCrudToQuest="questId"
     >
     </RechercheAventurier>
 
-    <RechercheAventurier 
-      :showAddButton="false" 
-      v-if="isSearchVisible && questStatus === 'pending'" 
-      :canCrudToQuest="questId" 
+    <RechercheAventurier
+      :showAddButton="false"
+      v-if="isSearchVisible && questStatus === 'pending'"
+      :canCrudToQuest="questId"
       @closeSearch="isSearchVisible = false;"
     >
     </RechercheAventurier>
@@ -107,6 +107,7 @@ export default {
         this.dataRequetes.push(game);
       }
     }
+    if(response.status === 401) localStorage.clear();
   }
 };
 </script>
@@ -150,7 +151,7 @@ export default {
   z-index: 0;
   position: relative;
   color: white;
-} 
+}
 
 body {
     background: #e3eeff;
@@ -171,7 +172,7 @@ body {
     flex-wrap: wrap;
     width: 90%;
     height: 90%;
-    
+
 }
 
 .card-click {
