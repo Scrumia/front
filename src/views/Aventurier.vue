@@ -134,7 +134,7 @@ export default {
       },
       showSearchBarLocal: this.showSearchBar,
       addAdventurerLocal: this.addAdventurer,
-      isModalVisible: true,
+      isModalVisible: false,
       specialities: [],
     };
   },
